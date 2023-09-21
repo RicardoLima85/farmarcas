@@ -25,6 +25,17 @@ class ExampleTest extends TestCase
         $response->assertStatus(201);
     }
 
+        public function test_get_event()
+    {
+        $event = factory()->create(); // Suponha que você tenha um evento criado
+
+        $response = $this->get("http://localhost:8000/visualizar-evento/{$event->id}");
+
+        $response->assertStatus(200) // Deve retornar código 200 (OK)
+            ->assertSee($event->title) // Verifica se o título do evento está presente na resposta
+            ->assertSee($event->description); // Verifica se a descrição do evento está presente na resposta
+    }
+
         public function test_edit_event()
     {
         $event = factory()->create(); // Suponha que você tenha um evento criado

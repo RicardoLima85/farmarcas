@@ -25,14 +25,13 @@ class LoginController extends Controller
      *
      * @return void
      */
-
 /**
  * @OA\Post(
  *     path="/login",
  *     operationId="authLogin",
  *     tags={"Auth"},
  *     summary="User Login",
- *     description="Login User Here",
+ *     description="Login",
  *     @OA\RequestBody(
  *         @OA\JsonContent(
  *             @OA\MediaType(
@@ -47,14 +46,17 @@ class LoginController extends Controller
  *         ),
  *     ),
  *     @OA\Response(
- *         response=204,
+ *         response=200,
  *         description="Login Successfully",
- *         @OA\JsonContent()
+ *         @OA\JsonContent(
+ *             @OA\Property(property="token", type="string", example="Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImI5MzZkYj..."),
+ *         )
  *     ),
  *     @OA\Response(response=400, description="Bad request"),
  *     @OA\Response(response=404, description="Resource Not Found"),
  * )
  */
+
     public function __construct()
     {
         $this->middleware('guest')->except('logout');

@@ -1,4 +1,61 @@
-<div class="container">
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Inclua as bibliotecas e os estilos necessários aqui -->
+</head>
+<body>
+    <div class="container">
+        <!-- ... Seu HTML existente aqui ... -->
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <!-- ... Cabeçalho da tabela ... -->
+            </thead>
+            <tbody id="eventTableBody">
+                <!-- Linhas da tabela serão adicionadas aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // JavaScript para buscar e renderizar os dados
+        fetch("/eventos.php", { // Supondo que o arquivo PHP para buscar os eventos seja "eventos.php"
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log(response);
+                return response.json();
+            } else {
+                throw new Error('Erro ao obter a lista de eventos');
+                console.log("erro");
+            }
+        })
+        .then(data => {
+            console.log("Lista de eventos:", data);
+
+            const eventTableBody = document.getElementById("eventTableBody");
+
+            eventTableBody.innerHTML = "";
+
+            data.forEach(evento => {
+                const newRow = document.createElement("tr");
+                // Crie e preencha as células da tabela como mostrado no exemplo anterior
+                // ...
+                eventTableBody.appendChild(newRow);
+            });
+        })
+        .catch(error => {
+            console.error("Erro na solicitação GET:", error);
+        });
+    </script>
+</body>
+</html>
+
+<!-- <div class="container">
     <div class="table-wrapper">
         <div class="table-title">
             <div class="row">
@@ -62,4 +119,4 @@
             </ul>
         </div>
     </div>
-</div>
+</div> -->

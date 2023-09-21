@@ -12,20 +12,15 @@
     "paths": {
         "/login": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "summary": "User Login",
-                "description": "Login User Here",
+                "description": "Login User",
                 "operationId": "authLogin",
                 "requestBody": {
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "required": [
-                                    "email",
-                                    "password"
-                                ],
+                                "required": ["email", "password"],
                                 "properties": {
                                     "email": {
                                         "type": "email"
@@ -43,11 +38,19 @@
                     }
                 },
                 "responses": {
-                    "204": {
-                        "description": "Login Successfully",
+                    "200": {
+                        "description": "Successful login",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "description": "JWT token for authentication"
+                                        }
+                                    }
+                                }
                             }
                         }
                     },
@@ -62,9 +65,7 @@
         },
         "/register": {
             "post": {
-                "tags": [
-                    "Auth"
-                ],
+                "tags": ["Auth"],
                 "summary": "User Register",
                 "description": "User Register here",
                 "operationId": "Register",
@@ -136,9 +137,7 @@
         },
         "/criar-evento": {
             "post": {
-                "tags": [
-                    "Eventos"
-                ],
+                "tags": ["Eventos"],
                 "summary": "Create event",
                 "description": "responsável por criar um evento",
                 "operationId": "event",
@@ -150,8 +149,8 @@
                                     "title",
                                     "description",
                                     "status",
-                                    "data_inicio",
-                                    "data_prazo"
+                                    "start",
+                                    "end"
                                 ],
                                 "properties": {
                                     "title": {
@@ -160,10 +159,10 @@
                                     "description": {
                                         "type": "string"
                                     },
-                                    "data_inicio": {
+                                    "start": {
                                         "type": "timestamp"
                                     },
-                                    "data_prazo": {
+                                    "end": {
                                         "type": "timestamp"
                                     }
                                 },
@@ -200,9 +199,7 @@
         },
         "/eventos": {
             "get": {
-                "tags": [
-                    "Eventos"
-                ],
+                "tags": ["Eventos"],
                 "summary": "Listar eventos",
                 "description": "Listar todos os eventos",
                 "operationId": "eventall",
@@ -225,9 +222,7 @@
         },
         "/eventos/{id}": {
             "get": {
-                "tags": [
-                    "Eventos"
-                ],
+                "tags": ["Eventos"],
                 "summary": "Listar um evento específico",
                 "description": "Listar um evento específico",
                 "operationId": "eventabyid",
@@ -270,9 +265,7 @@
         },
         "/excluir-evento/{id}": {
             "delete": {
-                "tags": [
-                    "Eventos"
-                ],
+                "tags": ["Eventos"],
                 "summary": "Delete um evento",
                 "operationId": "ApiV1DeleteUser",
                 "parameters": [
@@ -299,9 +292,7 @@
         },
         "/editar-evento/{nomeEvento}": {
             "put": {
-                "tags": [
-                    "Eventos"
-                ],
+                "tags": ["Eventos"],
                 "summary": "Put event",
                 "description": "Atualizado o evento com base em seu id",
                 "operationId": "eventput2",
@@ -328,10 +319,10 @@
                                     "description": {
                                         "type": "string"
                                     },
-                                    "data_inicio": {
+                                    "start": {
                                         "type": "timestamp"
                                     },
-                                    "data_prazo": {
+                                    "end": {
                                         "type": "timestamp"
                                     },
                                     "status": {
