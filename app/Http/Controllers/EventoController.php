@@ -81,21 +81,21 @@ class EventoController extends Controller
 }
 
 
-    /**
-     * @OA\Get(
-        * path="/eventos",
-        * summary="Listar eventos",
-        * description="Listar todos os eventos",
-        * operationId="eventall",
-        * tags={"Eventos"},
-        * security={ {"bearer": {} }},
-        @OA\Response(
-        *          response=200,
-        *          description="Eventos",
-        *          @OA\JsonContent()
-        *       ),
-     * )
-     */
+   /**
+ * @OA\Get(
+ *     path="/eventos",
+ *     summary="Listar eventos",
+ *     description="Listar todos os eventos",
+ *     operationId="eventall",
+ *     tags={"Eventos"},
+ *     security={{"bearer":{}}},
+ *     @OA\Response(
+ *         response=200,
+ *         description="Eventos",
+ *         @OA\JsonContent()
+ *     )
+ * )
+ */
     public function VisualizarEvento()
     {
         $usuarioEmail = Auth::user()->email;
@@ -106,36 +106,36 @@ class EventoController extends Controller
         return response()->json(['message' => 'Eventos Encontrados', 'eventos' => $eventos], 200);
     }
 
-    /**
-     * @OA\Get(
-        * path="/eventos/{id}",
-        * summary="Listar um evento específico",
-        * description="Listar um evento específico",
-        * operationId="eventabyid",
-        * tags={"Eventos"},
-        * security={ {"bearer": {} }},
-        * @OA\Parameter(
-        *    description="Título do evento",
-        *    in="path",
-        *    name="id",
-        *    required=true,
-        *    example="teste",
-        *    @OA\Schema(
-        *       type="string",
-        *    )
-        * ),
-        @OA\Response(
-        *          response=200,
-        *          description="Eventos",
-        *          @OA\JsonContent()
-        *       ),
-        @OA\Response(
-        *          response=400,
-        *          description="Evento não encontrado ou você não tem permissão para vê-lo",
-        *          @OA\JsonContent()
-        *       )
-     * )
-     */
+/**
+ * @OA\Get(
+ *     path="/eventos/{id}",
+ *     summary="Listar um evento específico",
+ *     description="Listar um evento específico",
+ *     operationId="eventabyid",
+ *     tags={"Eventos"},
+ *     security={{"bearer":{}}},
+ *     @OA\Parameter(
+ *         description="Título do evento",
+ *         in="path",
+ *         name="id",
+ *         required=true,
+ *         example="evento123",
+ *         @OA\Schema(
+ *             type="string",
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Eventos",
+ *         @OA\JsonContent()
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Evento não encontrado ou você não tem permissão para vê-lo",
+ *         @OA\JsonContent()
+ *     )
+ * )
+ */
     public function VisualizarEventoEsp($title)
     {
         $evento = EventoModel::where('title', $title)
@@ -148,32 +148,32 @@ class EventoController extends Controller
         return response()->json(['message' => 'Eventos Encontrados', 'eventos' => $evento], 200);
     }
 
-  /**
-     * @OA\Delete(
-     *      path="/excluir-evento/{id}",
-     *      tags={"Eventos"},
-     *      operationId="ApiV1DeleteUser",
-     *      summary="Delete um evento",
-            * @OA\Parameter(
-            *    description="Título do evento",
-            *    in="path",
-            *    name="id",
-            *    required=true,
-            *    example="teste",
-            *    @OA\Schema(
-            *       type="string",
-            *    )
-            * ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Evento não encontrado ou você não tem permissão para excluí-lo"
-     *      ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Evento deletado com sucesso"
-     *      )
-     * )
-     */
+ /**
+ * @OA\Delete(
+ *      path="/excluir-evento/{id}",
+ *      tags={"Eventos"},
+ *      operationId="ApiV1DeleteUser",
+ *      summary="Delete um evento",
+ *      @OA\Parameter(
+ *          description="Título do evento",
+ *          in="path",
+ *          name="id",
+ *          required=true,
+ *          example="evento123",
+ *          @OA\Schema(
+ *              type="string",
+ *          )
+ *      ),
+ *      @OA\Response(
+ *          response=404,
+ *          description="Evento não encontrado ou você não tem permissão para excluí-lo"
+ *      ),
+ *      @OA\Response(
+ *          response=200,
+ *          description="Evento deletado com sucesso"
+ *      )
+ * )
+ */
     public function excluirEvento($title)
     {
         // Busque o evento no banco de dados com base no título e usuário autenticado
@@ -194,45 +194,46 @@ class EventoController extends Controller
     }
 
     /**
-        * @OA\Put(
-        * path="/editar-evento/{nomeEvento}",
-        * operationId="eventput2",
-        * tags={"Eventos"},
-        * summary="Put event",
-        * security={ {"bearer": {} }},
-        * description="Atualizado o evento com base em seu id",
-        * @OA\Parameter(
-        *    description="Nome do evento",
-        *    in="path",
-        *    name="nomeEvento",
-        *    required=true,
-        *    example="teste",
-        *    @OA\Schema(
-        *       type="string",
-        *    )
-        * ),
-        *     @OA\RequestBody(
-        *         @OA\JsonContent(),
-        *         @OA\MediaType(
-        *            mediaType="multipart/form-data",
-        *            @OA\Schema(
-        *               type="object",
-        *               @OA\Property(property="title", type="string"),
-        *               @OA\Property(property="description", type="string"),
-        *               @OA\Property(property="start", type="timestamp"),
-        *               @OA\Property(property="end", type="timestamp"),
-        *               @OA\Property(property="status", type="boolean")
-        *            ),
-        *        ),
-        *    ),
-        *      @OA\Response(
-        *          response=200,
-        *          description="Evento editado com sucesso",
-        *          @OA\JsonContent()
-        *       ),
-        *      @OA\Response(response=404, description="Evento não encontrado ou você não tem permissão para editá-lo"),
-        * )
-        */
+ * @OA\Put(
+ *     path="/editar-evento/{nomeEvento}",
+ *     operationId="eventput2",
+ *     tags={"Eventos"},
+ *     summary="Put event",
+ *     security={{"bearer":{}}},
+ *     description="Atualizado o evento com base em seu id",
+ *     @OA\Parameter(
+ *         description="Nome do evento",
+ *         in="path",
+ *         name="nomeEvento",
+ *         required=true,
+ *         example="evento123",
+ *         @OA\Schema(
+ *             type="string",
+ *         )
+ *     ),
+ *     @OA\RequestBody(
+ *         @OA\JsonContent(
+ *             @OA\MediaType(
+ *                 mediaType="multipart/form-data",
+ *                 @OA\Schema(
+ *                     type="object",
+ *                     @OA\Property(property="title", type="string", example="Evento Atualizado"),
+ *                     @OA\Property(property="description", type="string", example="Descrição Atualizada"),
+ *                     @OA\Property(property="start", type="string", format="date-time", example="2023-09-21T12:00:00Z"),
+ *                     @OA\Property(property="end", type="string", format="date-time", example="2023-09-21T14:00:00Z"),
+ *                     @OA\Property(property="status", type="boolean", example=true)
+ *                 ),
+ *             ),
+ *         ),
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Evento editado com sucesso",
+ *         @OA\JsonContent()
+ *     ),
+ *     @OA\Response(response=404, description="Evento não encontrado ou você não tem permissão para editá-lo"),
+ * )
+ */
     public function editarEvento(Request $request, $title)
     {
         // Busque o evento no banco de dados com base no título e usuário autenticado
