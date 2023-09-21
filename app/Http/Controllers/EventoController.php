@@ -55,7 +55,7 @@ class EventoController extends Controller
 
     if ($eventoExistente) {
         // Se já existe um evento com a mesma data de início para o mesmo usuário
-        return response()->json(['message' => 'Já existe um evento com a mesma data de início'], 400);
+        return response()->json(['message' => 'Já existe um evento com a mesma data de início'], 500);
     }
 
     // Verifique se a data de início é um final de semana (sábado ou domingo)
